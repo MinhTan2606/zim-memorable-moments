@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Khoảnh Khắc Đáng Nhớ",
+    "slug": "zim-memorable-moments",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/logo.webp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/logo.webp",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1a2e"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zim.memorablemoments"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.webp",
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.zim.memorablemoments"
+    },
+    "scheme": "zim-moments",
+    "newArchEnabled": true
+  }
+}
