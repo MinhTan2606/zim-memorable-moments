@@ -31,18 +31,35 @@ npx expo start
 
 ## Hướng dẫn build
 
-### Android APK (Preview)
+### Android APK (build trên máy — khuyến nghị)
+
+**Yêu cầu thêm:** [Android Studio](https://developer.android.com/studio) (hoặc ít nhất Android SDK + NDK theo phiên bản Expo/React Native), JDK 17 phù hợp với Android Gradle Plugin. Biến môi trường `ANDROID_HOME` trỏ tới SDK (ví dụ macOS: `~/Library/Android/sdk`).
 
 ```bash
-# Cài EAS CLI
+npm install
+
+# Lần đầu hoặc sau khi clone repo (thư mục android/ không có trong git):
+npm run prebuild:android
+
+# Build file APK release
+npm run build:android:apk
+```
+
+**File APK sau khi build thành công:**
+
+`android/app/build/outputs/apk/release/app-release.apk`
+
+### Android APK (EAS Build — trên cloud Expo)
+
+Cần tài khoản Expo và file `eas.json` (profile build APK, ví dụ `buildType: "apk"`). Tham khảo [EAS Build](https://docs.expo.dev/build/introduction/).
+
+```bash
 npm install -g eas-cli
-
-# Đăng nhập Expo account
 eas login
-
-# Build APK
 eas build --platform android --profile preview
 ```
+
+---
 
 ### Hoặc dùng Expo Snack
 

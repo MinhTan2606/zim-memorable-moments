@@ -1,8 +1,8 @@
-import { Image } from 'expo-image';
-import React, { useCallback, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import type { SharedValue } from 'react-native-reanimated';
+import { Image } from "expo-image";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import type { SharedValue } from "react-native-reanimated";
 import Animated, {
   Easing,
   interpolate,
@@ -12,11 +12,17 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
-} from 'react-native-reanimated';
-import type { MomentStory } from '../constants/mockData';
-import { Colors, Duration, Radius, Spacing, Typography } from '../constants/theme';
-import { useReduceMotion } from '../hooks/useReduceMotion';
-import { RevealOverlay } from './RevealOverlay';
+} from "react-native-reanimated";
+import type { MomentStory } from "../constants/mockData";
+import {
+  Colors,
+  Duration,
+  Radius,
+  Spacing,
+  Typography,
+} from "../constants/theme";
+import { useReduceMotion } from "../hooks/useReduceMotion";
+import { RevealOverlay } from "./RevealOverlay";
 
 interface MomentCardProps {
   story: MomentStory;
@@ -55,7 +61,7 @@ export function MomentCard({
 
   useAnimatedReaction(
     () => focusedIndexSV.value,
-    idx => {
+    (idx) => {
       const on = idx === flatIndex;
       if (reduceMotion) {
         focusProgress.value = on ? 1 : 0;
@@ -70,7 +76,7 @@ export function MomentCard({
   );
 
   const triggerMoveIn = useCallback(() => {
-    'worklet';
+    "worklet";
     if (reduceMotion) return;
     translateY.value = withSpring(-10, { damping: 14, stiffness: 180 });
     cardScale.value = withSpring(1.02, { damping: 16, stiffness: 200 });
@@ -78,7 +84,7 @@ export function MomentCard({
   }, [reduceMotion, translateY, cardScale, imageOverlayOpacity]);
 
   const triggerMoveOut = useCallback(() => {
-    'worklet';
+    "worklet";
     if (reduceMotion) return;
     translateY.value = withSpring(0, { damping: 18, stiffness: 220 });
     cardScale.value = withSpring(1, { damping: 18, stiffness: 220 });
@@ -87,7 +93,24 @@ export function MomentCard({
 
   const handleTap = useCallback(() => {
     onFocusRequest?.(logicalIndex);
-  }, [onFocusRequest, logicalIndex]);
+    setIsHovered((wasRevealed) => {
+      if (wasRevealed) {
+        onPress?.(story);
+        return false;
+      }
+      return true;
+    });
+  }, [onFocusRequest, logicalIndex, onPress, story]);
+
+  useAnimatedReaction(
+    () => focusedIndexSV.value,
+    (idx) => {
+      if (idx !== flatIndex) {
+        runOnJS(setIsHovered)(false);
+      }
+    },
+    [flatIndex],
+  );
 
   const tap = Gesture.Tap()
     .maxDeltaX(14)
@@ -96,13 +119,13 @@ export function MomentCard({
       triggerMoveIn();
     })
     .onEnd((_e, success) => {
-      'worklet';
+      "worklet";
       if (success) {
         runOnJS(handleTap)();
       }
     })
     .onFinalize(() => {
-      'worklet';
+      "worklet";
       triggerMoveOut();
     });
 
@@ -115,10 +138,7 @@ export function MomentCard({
   const composed = Gesture.Race(tap, longPress);
 
   const cardStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: translateY.value },
-      { scale: cardScale.value },
-    ],
+    transform: [{ translateY: translateY.value }, { scale: cardScale.value }],
   }));
 
   const baseOverlayStyle = useAnimatedStyle(() => ({
@@ -144,12 +164,7 @@ export function MomentCard({
   return (
     <GestureDetector gesture={composed}>
       <Animated.View
-        style={[
-          styles.card,
-          { width, height },
-          cardStyle,
-          focusAmbientStyle,
-        ]}
+        style={[styles.card, { width, height }, cardStyle, focusAmbientStyle]}
         accessible
         accessibilityRole="button"
         accessibilityLabel={`Khoảnh khắc: ${story.title}`}
@@ -166,7 +181,13 @@ export function MomentCard({
           accessibilityIgnoresInvertColors
         />
 
-        <Animated.View style={[StyleSheet.absoluteFill, styles.baseOverlay, baseOverlayStyle]} />
+        <Animated.View
+          style={[
+            StyleSheet.absoluteFill,
+            styles.baseOverlay,
+            baseOverlayStyle,
+          ]}
+        />
 
         {!isHovered && (
           <View style={styles.defaultContent}>
@@ -200,9 +221,9 @@ export function MomentCard({
 const styles = StyleSheet.create({
   card: {
     borderRadius: Radius.lg,
-    overflow: 'hidden',
+    overflow: "hidden",
     backgroundColor: Colors.cardBg,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 12,
@@ -222,17 +243,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.overlayMedium,
   },
   defaultContent: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     padding: Spacing.lg,
     gap: Spacing.sm,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingTop: Spacing['3xl'],
+    backgroundColor: "rgba(0,0,0,0.5)",
+    paddingTop: Spacing["3xl"],
   },
   tagPill: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     backgroundColor: Colors.primary,
     paddingHorizontal: Spacing.md,
     paddingVertical: 3,
@@ -243,7 +264,7 @@ const styles = StyleSheet.create({
     fontSize: Typography.size.xs,
     fontWeight: Typography.weight.semiBold,
     letterSpacing: 0.5,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   title: {
     color: Colors.textPrimary,

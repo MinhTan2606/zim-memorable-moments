@@ -4,10 +4,10 @@
     "slug": "zim-memorable-moments",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/logo.webp",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/logo.webp",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#1a1a2e"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.webp",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#1a1a2e"
       },
       "package": "com.zim.memorablemoments"

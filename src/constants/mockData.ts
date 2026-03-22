@@ -12,7 +12,7 @@ export const MOMENT_STORIES: MomentStory[] = [
   {
     id: "1",
     imageUrl:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&fm=webp&q=80",
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&fm=webp&q=80",
     blurhash: "LGF5?xYk^6#M@-5c,1J5@[or[Q6.",
     tag: "Học tiếng Anh",
     title: "Từ sợ hãi đến tự tin",
